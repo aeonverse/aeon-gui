@@ -216,9 +216,9 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    app.setApplicationName("monero-core");
-    app.setOrganizationDomain("getmonero.org");
-    app.setOrganizationName("monero-project");
+    app.setApplicationName("aeon-gui");
+    app.setOrganizationDomain("https://github.com/aeonverse/");
+    app.setOrganizationName("aeonverse");
 
     // Ask to enable Tails OS persistence mode, it affects:
     // - Log file location
@@ -240,9 +240,9 @@ int main(int argc, char *argv[])
     #endif
 
     if(isTails && TailsOS::usePersistence){
-        moneroAccountsDir = QDir::homePath() + "/Persistent/Monero/wallets";
+        moneroAccountsDir = QDir::homePath() + "/Persistent/Aeon/wallets";
     } else if (!moneroAccountsRootDir.empty()) {
-        moneroAccountsDir = moneroAccountsRootDir.at(0) + "/Monero/wallets";
+        moneroAccountsDir = moneroAccountsRootDir.at(0) + "/Aeon/wallets";
     } else {
         qCritical() << "Error: accounts root directory could not be set";
         return 1;
