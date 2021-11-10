@@ -89,11 +89,11 @@ message(STATUS "OpenGL: libraries at ${OPENGL_LIBRARIES}")
 target_include_directories(aeon-wallet-gui PUBLIC ${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
 target_include_directories(aeon-wallet-gui PUBLIC
-	${CMAKE_SOURCE_DIR}/aeon/include
-    ${CMAKE_SOURCE_DIR}/aeon/src
-    ${CMAKE_SOURCE_DIR}/aeon/external/easylogging++
-    ${CMAKE_SOURCE_DIR}/aeon/contrib/epee/include
-    ${CMAKE_SOURCE_DIR}/aeon/external/qrcodegen
+	${CMAKE_SOURCE_DIR}/monero/include
+    ${CMAKE_SOURCE_DIR}/monero/src
+    ${CMAKE_SOURCE_DIR}/monero/external/easylogging++
+    ${CMAKE_SOURCE_DIR}/monero/contrib/epee/include
+    ${CMAKE_SOURCE_DIR}/monero/external/qrcodegen
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}/daemon
 	${CMAKE_CURRENT_SOURCE_DIR}/libwalletqt
@@ -122,9 +122,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 target_link_libraries(aeon-wallet-gui
     epee
     common
-    net
     wallet_api
-    qrcodegen
     easylogging
     ${QT5_LIBRARIES}
     ${EXTRA_LIBRARIES}

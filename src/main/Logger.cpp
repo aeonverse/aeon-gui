@@ -123,7 +123,7 @@ Logger::Logger(QCoreApplication &parent, QString userDefinedLogFilePath)
 void Logger::resetLogFilePath(bool portable)
 {
     m_logFilePath = QDir::toNativeSeparators(getLogPath(m_userDefinedLogFilePath, portable));
-    aeon::Wallet::init(m_applicationFilePath.c_str(), "aeon-wallet-gui", m_logFilePath.toStdString(), true);
+    Monero::Wallet::init(m_applicationFilePath.c_str(), "aeon-wallet-gui", m_logFilePath.toStdString(), true);
     qWarning() << "Logging to" << m_logFilePath;
     emit logFilePathChanged();
 }

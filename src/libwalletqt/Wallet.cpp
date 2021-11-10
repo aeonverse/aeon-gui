@@ -370,10 +370,6 @@ void Wallet::switchSubaddressAccount(quint32 accountIndex)
     if (accountIndex < numSubaddressAccounts())
     {
         m_currentSubaddressAccount = accountIndex;
-        if (!setCacheAttribute(ATTRIBUTE_SUBADDRESS_ACCOUNT, QString::number(m_currentSubaddressAccount)))
-        {
-            qWarning() << "failed to set " << ATTRIBUTE_SUBADDRESS_ACCOUNT << " cache attribute";
-        }
         m_subaddress->refresh(m_currentSubaddressAccount);
         m_history->refresh(m_currentSubaddressAccount);
         emit currentSubaddressAccountChanged();
@@ -474,20 +470,20 @@ quint64 Wallet::daemonBlockChainTargetHeight() const
 
 bool Wallet::exportKeyImages(const QString& path, bool all)
 {
-    return m_walletImpl->exportKeyImages(path.toStdString(), all);
+    return false;
 }
 
 bool Wallet::importKeyImages(const QString& path)
 {
-    return m_walletImpl->importKeyImages(path.toStdString());
+    return false;
 }
 
 bool Wallet::exportOutputs(const QString& path, bool all) {
-    return m_walletImpl->exportOutputs(path.toStdString(), all);
+    return false;
 }
 
 bool Wallet::importOutputs(const QString& path) {
-    return m_walletImpl->importOutputs(path.toStdString());
+    return false;
 }
 
 bool Wallet::refresh(bool historyAndSubaddresses /* = true */)
@@ -539,7 +535,7 @@ PendingTransaction *Wallet::createTransaction(
         amounts.push_back(Monero::Wallet::amountFromString(amount.toStdString()));
     }
     std::set<uint32_t> subaddr_indices;
-    Monero::PendingTransaction *ptImpl = m_walletImpl->createTransactionMultDest(
+    Monero::PendingTransaction *ptImpl = m_walletImpl->createTransaction(
         destinations.front(),
         payment_id.toStdString(),
         amounts.front(),
@@ -733,15 +729,6 @@ QString Wallet::integratedAddress(const QString &paymentId) const
     return QString::fromStdString(m_walletImpl->integratedAddress(paymentId.toStdString()));
 }
 
-QString Wallet::getCacheAttribute(const QString &key) const {
-    return QString::fromStdString(m_walletImpl->getCacheAttribute(key.toStdString()));
-}
-
-bool Wallet::setCacheAttribute(const QString &key, const QString &val)
-{
-    return m_walletImpl->setCacheAttribute(key.toStdString(), val.toStdString());
-}
-
 bool Wallet::setUserNote(const QString &txid, const QString &note)
 {
   return m_walletImpl->setUserNote(txid.toStdString(), note.toStdString());
@@ -915,7 +902,7 @@ bool Wallet::parse_uri(const QString &uri, QString &address, QString &payment_id
 QString Wallet::make_uri(const QString &address, const quint64 &amount, const QString &tx_description, const QString &recipient_name) const
 {
     std::string error;
-    return QString::fromStdString(m_walletImpl->make_uri(address.toStdString(), "", amount, tx_description.toStdString(), recipient_name.toStdString(), error));
+    return QString::fromStdString("");
 }
 
 bool Wallet::rescanSpent()
@@ -1096,7 +1083,7 @@ Wallet::Wallet(Monero::Wallet *w, QObject *parent)
 {
     m_walletListener = new WalletListenerImpl(this);
     m_walletImpl->setListener(m_walletListener);
-    m_currentSubaddressAccount = getCacheAttribute(ATTRIBUTE_SUBADDRESS_ACCOUNT).toUInt();
+    m_currentSubaddressAccount = 0;
     // start cache timers
     m_connectionStatusTime.start();
     m_daemonBlockChainHeightTime.start();

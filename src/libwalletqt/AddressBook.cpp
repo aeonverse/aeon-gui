@@ -135,16 +135,4 @@ QString AddressBook::getDescription(const QString &address) const
 
 void AddressBook::setDescription(int index, const QString &description)
 {
-     bool result;
-
-     {
-         QWriteLocker locker(&m_lock);
-
-         result = m_addressBookImpl->setDescription(index, description.toStdString());
-     }
-
-     if (result)
-     {
-         getAll();
-     }
  }

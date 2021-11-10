@@ -410,8 +410,6 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("translationManager", TranslationManager::instance());
 
-    engine.addImageProvider(QLatin1String("qrcode"), new QRCodeImageProvider());
-
     engine.rootContext()->setContextProperty("logger", &logger);
 
     engine.rootContext()->setContextProperty("mainApp", &app);

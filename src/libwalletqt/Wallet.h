@@ -303,10 +303,6 @@ public:
     //! Make URI
     Q_INVOKABLE QString make_uri(const QString &address, const quint64 &amount = 0, const QString &tx_description = "", const QString &recipient_name = "") const;
 
-    //! Namespace your cacheAttribute keys to avoid collisions
-    Q_INVOKABLE bool setCacheAttribute(const QString &key, const QString &val);
-    Q_INVOKABLE QString getCacheAttribute(const QString &key) const;
-
     Q_INVOKABLE bool setUserNote(const QString &txid, const QString &note);
     Q_INVOKABLE QString getUserNote(const QString &txid) const;
     Q_INVOKABLE QString getTxKey(const QString &txid) const;
