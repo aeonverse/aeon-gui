@@ -52,13 +52,7 @@ public:
     // called when wallet refreshed by background thread or explicitly
     virtual void refreshed() override;
 
-    virtual void onDeviceButtonRequest(uint64_t code) override;
-
-    virtual void onDeviceButtonPressed() override;
-
     virtual void onPassphraseEntered(const QString &passphrase, bool enter_on_device, bool entry_abort) override;
-
-    virtual Monero::optional<std::string> onDevicePassphraseRequest(bool & on_device) override;
 
 private:
     Wallet * m_wallet;

@@ -92,10 +92,6 @@ bool DaemonManager::start(const QString &flags, NetworkType::Type nettype, const
         }
     }
 
-    if (noSync) {
-        arguments << "--no-sync";
-    }
-
     arguments << "--check-updates" << "disabled";
     arguments << "--non-interactive";
 

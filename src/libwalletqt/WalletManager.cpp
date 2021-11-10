@@ -43,7 +43,6 @@
 #include <QMutexLocker>
 #include <QString>
 
-#include "qt/updater.h"
 #include "qt/ScopeGuard.h"
 
 class WalletPassphraseListenerImpl : public  Monero::WalletListener, public PassphraseReceiver
@@ -62,24 +61,6 @@ public:
   {
       qDebug() << __FUNCTION__;
       m_phelper.onPassphraseEntered(passphrase, enter_on_device, entry_abort);
-  }
-
-  virtual Monero::optional<std::string> onDevicePassphraseRequest(bool & on_device) override
-  {
-      qDebug() << __FUNCTION__;
-      return m_phelper.onDevicePassphraseRequest(on_device);
-  }
-
-  virtual void onDeviceButtonRequest(uint64_t code) override
-  {
-      qDebug() << __FUNCTION__;
-      emit m_mgr->deviceButtonRequest(code);
-  }
-
-  virtual void onDeviceButtonPressed() override
-  {
-      qDebug() << __FUNCTION__;
-      emit m_mgr->deviceButtonPressed();
   }
 
 private:
@@ -120,7 +101,7 @@ Wallet *WalletManager::openWallet(const QString &path, const QString &password, 
     qDebug("%s: opening wallet at %s, nettype = %d ",
            __PRETTY_FUNCTION__, qPrintable(path), nettype);
 
-    Monero::Wallet * w =  m_pimpl->openWallet(path.toStdString(), password.toStdString(), static_cast<Monero::NetworkType>(nettype), kdfRounds, &tmpListener);
+    Monero::Wallet * w =  m_pimpl->openWallet(path.toStdString(), password.toStdString(), static_cast<Monero::NetworkType>(nettype), kdfRounds);
     w->setListener(nullptr);
 
     qDebug("%s: opened wallet: %s, status: %d", __PRETTY_FUNCTION__, w->address(0, 0).c_str(), w->status());
@@ -149,7 +130,7 @@ Wallet *WalletManager::recoveryWallet(const QString &path, const QString &seed, 
         qDebug() << "Closing open m_currentWallet" << m_currentWallet;
         delete m_currentWallet;
     }
-    Monero::Wallet * w = m_pimpl->recoveryWallet(path.toStdString(), "", seed.toStdString(), static_cast<Monero::NetworkType>(nettype), restoreHeight, kdfRounds, seed_offset.toStdString());
+    Monero::Wallet * w = m_pimpl->recoveryWallet(path.toStdString(), "", seed.toStdString(), static_cast<Monero::NetworkType>(nettype), restoreHeight, kdfRounds);
     m_currentWallet = new Wallet(w);
     return m_currentWallet;
 }
@@ -173,33 +154,7 @@ Wallet *WalletManager::createWalletFromKeys(const QString &path, const QString &
 Wallet *WalletManager::createWalletFromDevice(const QString &path, const QString &password, NetworkType::Type nettype,
                                               const QString &deviceName, quint64 restoreHeight, const QString &subaddressLookahead, quint64 kdfRounds)
 {
-    QMutexLocker locker(&m_mutex);
-    WalletPassphraseListenerImpl tmpListener(this);
-    m_mutex_passphraseReceiver.lock();
-    m_passphraseReceiver = &tmpListener;
-    m_mutex_passphraseReceiver.unlock();
-    const auto cleanup = sg::make_scope_guard([this]() noexcept {
-        QMutexLocker passphrase_locker(&m_mutex_passphraseReceiver);
-        this->m_passphraseReceiver = nullptr;
-    });
-
-    if (m_currentWallet) {
-        qDebug() << "Closing open m_currentWallet" << m_currentWallet;
-        delete m_currentWallet;
-        m_currentWallet = NULL;
-    }
-    Monero::Wallet * w = m_pimpl->createWalletFromDevice(path.toStdString(), password.toStdString(), static_cast<Monero::NetworkType>(nettype),
-                                                         deviceName.toStdString(), restoreHeight, subaddressLookahead.toStdString(), kdfRounds, &tmpListener);
-    w->setListener(nullptr);
-
-    m_currentWallet = new Wallet(w);
-
-    // move wallet to the GUI thread. Otherwise it wont be emitting signals
-    if (m_currentWallet->thread() != qApp->thread()) {
-        m_currentWallet->moveToThread(qApp->thread());
-    }
-
-    return m_currentWallet;
+    return nullptr;
 }
 
 
@@ -504,35 +459,7 @@ void WalletManager::checkUpdatesAsync(
     const QString &buildTag,
     const QString &version)
 {
-    m_scheduler.run([this, software, subdir, buildTag, version] {
-        const auto updateInfo = Monero::WalletManager::checkUpdates(
-            software.toStdString(),
-            subdir.toStdString(),
-            buildTag.toStdString().c_str(),
-            version.toStdString().c_str());
-        if (!std::get<0>(updateInfo))
-        {
-            return;
-        }
-
-        const QString version = QString::fromStdString(std::get<1>(updateInfo));
-        const QByteArray hashFromDns = QByteArray::fromHex(QString::fromStdString(std::get<2>(updateInfo)).toUtf8());
-        const QString downloadUrl = QString::fromStdString(std::get<4>(updateInfo));
-
-        try
-        {
-            const QString binaryFilename = QUrl(downloadUrl).fileName();
-            QPair<QString, QString> signers;
-            const QString signedHash = Updater().fetchSignedHash(binaryFilename, hashFromDns, signers).toHex();
-
-            qInfo() << "Update found" << version << downloadUrl << "hash" << signedHash << "signed by" << signers;
-            emit checkUpdatesComplete(version, downloadUrl, signedHash, signers.first, signers.second);
-        }
-        catch (const std::exception &e)
-        {
-            qCritical() << "Failed to fetch and verify signed hash:" << e.what();
-        }
-    });
+    return;
 }
 
 QString WalletManager::checkUpdates(const QString &software, const QString &subdir) const
@@ -597,17 +524,5 @@ QString WalletManager::proxyAddress() const
 
 void WalletManager::setProxyAddress(QString address)
 {
-    m_scheduler.run([this, address] {
-        {
-            QMutexLocker locker(&m_proxyMutex);
-
-            if (!m_pimpl->setProxy(address.toStdString()))
-            {
-                qCritical() << "Failed to set proxy address" << address;
-            }
-
-            m_proxyAddress = std::move(address);
-        }
-        emit proxyAddressChanged();
-    });
+    return;
 }

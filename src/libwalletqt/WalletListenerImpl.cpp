@@ -72,26 +72,8 @@ void WalletListenerImpl::refreshed()
     emit m_wallet->refreshed();
 }
 
-void WalletListenerImpl::onDeviceButtonRequest(uint64_t code)
-{
-    qDebug() << __FUNCTION__;
-    emit m_wallet->deviceButtonRequest(code);
-}
-
-void WalletListenerImpl::onDeviceButtonPressed()
-{
-    qDebug() << __FUNCTION__;
-    emit m_wallet->deviceButtonPressed();
-}
-
 void WalletListenerImpl::onPassphraseEntered(const QString &passphrase, bool enter_on_device, bool entry_abort)
 {
     qDebug() << __FUNCTION__;
     m_phelper.onPassphraseEntered(passphrase, enter_on_device, entry_abort);
-}
-
-Monero::optional<std::string> WalletListenerImpl::onDevicePassphraseRequest(bool & on_device)
-{
-    qDebug() << __FUNCTION__;
-    return m_phelper.onDevicePassphraseRequest(on_device);
 }

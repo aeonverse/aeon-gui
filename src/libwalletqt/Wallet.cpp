@@ -174,19 +174,6 @@ QString Wallet::getProxyAddress() const
 
 void Wallet::setProxyAddress(QString address)
 {
-    m_scheduler.run([this, address] {
-        {
-            QMutexLocker locker(&m_proxyMutex);
-
-            if (!m_walletImpl->setProxy(address.toStdString()))
-            {
-                qCritical() << "failed to set proxy" << address;
-            }
-
-            m_proxyAddress = address;
-        }
-        emit proxyAddressChanged();
-    });
 }
 
 bool Wallet::synchronized() const
@@ -247,7 +234,7 @@ bool Wallet::init(const QString &daemonAddress, bool trustedDaemon, quint64 uppe
     {
         QMutexLocker locker(&m_proxyMutex);
 
-        if (!m_walletImpl->init(daemonAddress.toStdString(), upperTransactionLimit, m_daemonUsername.toStdString(), m_daemonPassword.toStdString(), false, false, proxyAddress.toStdString()))
+        if (!m_walletImpl->init(daemonAddress.toStdString(), upperTransactionLimit, m_daemonUsername.toStdString(), m_daemonPassword.toStdString(), false, false))
         {
             return false;
         }
@@ -307,17 +294,17 @@ void Wallet::initAsync(
 
 bool Wallet::isHwBacked() const
 {
-    return m_walletImpl->getDeviceType() != Monero::Wallet::Device_Software;
+    return false;
 }
 
 bool Wallet::isLedger() const
 {
-    return m_walletImpl->getDeviceType() == Monero::Wallet::Device_Ledger;
+    return false;
 }
 
 bool Wallet::isTrezor() const
 {
-    return m_walletImpl->getDeviceType() == Monero::Wallet::Device_Trezor;
+    return false;
 }
 
 //! create a view only wallet
@@ -420,10 +407,6 @@ void Wallet::setSubaddressLabel(quint32 accountIndex, quint32 addressIndex, cons
 }
 void Wallet::deviceShowAddressAsync(quint32 accountIndex, quint32 addressIndex, const QString &paymentId)
 {
-    m_scheduler.run([this, accountIndex, addressIndex, paymentId] {
-        m_walletImpl->deviceShowAddress(accountIndex, addressIndex, paymentId.toStdString());
-        emit deviceShowAddressShowed();
-    });
 }
 
 void Wallet::refreshHeightAsync()
@@ -557,9 +540,9 @@ PendingTransaction *Wallet::createTransaction(
     }
     std::set<uint32_t> subaddr_indices;
     Monero::PendingTransaction *ptImpl = m_walletImpl->createTransactionMultDest(
-        destinations,
+        destinations.front(),
         payment_id.toStdString(),
-        amounts,
+        amounts.front(),
         mixin_count,
         static_cast<Monero::PendingTransaction::Priority>(priority),
         currentSubaddressAccount(),
@@ -672,11 +655,7 @@ void Wallet::estimateTransactionFeeAsync(
             {
                 destinations.emplace_back(std::make_pair(destinationAddresses[index].toStdString(), amounts[index]));
             }
-
-            const uint64_t fee = m_walletImpl->estimateTransactionFee(
-                destinations,
-                static_cast<Monero::PendingTransaction::Priority>(priority));
-            return QJSValueList({QString::fromStdString(Monero::Wallet::displayAmount(fee))});
+            const uint64_t fee = 1000000000;
         },
         callback);
 }
@@ -1134,7 +1113,6 @@ Wallet::~Wallet()
     qDebug("~Wallet: Closing wallet");
 
     pauseRefresh();
-    m_walletImpl->stop();
     m_scheduler.shutdownWaitForFinished();
 
     //Monero::WalletManagerFactory::getWalletManager()->closeWallet(m_walletImpl);

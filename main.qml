@@ -2018,7 +2018,7 @@ ApplicationWindow {
             return;
         }
 
-        const simpleModeFlags = "--enable-dns-blocklist --out-peers 16";
+        const simpleModeFlags = "--out-peers 16";
         if (appWindow.daemonRunning) {
             appWindow.stopDaemon(function() {
                 appWindow.startDaemon(simpleModeFlags)
@@ -2160,12 +2160,6 @@ ApplicationWindow {
     }
 
     function checkUpdates() {
-        const version = Version.GUI_VERSION.match(/\d+\.\d+\.\d+\.\d+/);
-        if (version) {
-            walletManager.checkUpdatesAsync("monero-gui", "gui", getBuildTag(), version[0]);
-        } else {
-            console.error("failed to parse version number", Version.GUI_VERSION);
-        }
     }
 
     Timer {
@@ -2242,11 +2236,11 @@ ApplicationWindow {
     function getDefaultDaemonRpcPort(networkType) {
         switch (networkType) {
             case NetworkType.STAGENET:
-                return 38081;
+                return 31181;
             case NetworkType.TESTNET:
-                return 28081;
+                return 21181;
             default:
-                return 18081;
+                return 11181;
         }
     }
 
@@ -2363,11 +2357,9 @@ ApplicationWindow {
 
     Network {
         id: network
-        proxyAddress: persistentSettings.getProxyAddress()
     }
 
     WalletManager {
         id: walletManager
-        proxyAddress: persistentSettings.getProxyAddress()
     }
 }
