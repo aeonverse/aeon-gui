@@ -35,7 +35,7 @@
 
 using epee::net_utils::http::fields_list;
 using epee::net_utils::http::http_response_info;
-using epee::net_utils::http::abstract_http_client;
+using epee::net_utils::http::http_simple_client;
 
 HttpClient::HttpClient(QObject *parent /* = nullptr */)
     : QObject(parent)
@@ -78,7 +78,7 @@ bool HttpClient::on_header(const http_response_info &headers)
     m_received = 0;
     emit receivedChanged();
 
-    return net::http::client::on_header(headers);
+    return http_simple_client::on_header(headers);
 }
 
 bool HttpClient::handle_target_data(std::string &piece_of_transfer)
@@ -91,7 +91,7 @@ bool HttpClient::handle_target_data(std::string &piece_of_transfer)
     m_received += piece_of_transfer.size();
     emit receivedChanged();
 
-    return net::http::client::handle_target_data(piece_of_transfer);
+    return http_simple_client::handle_target_data(piece_of_transfer);
 }
 
 Network::Network(QObject *parent)
@@ -104,12 +104,8 @@ void Network::get(const QString &url, const QJSValue &callback, const QString &c
 {
     m_scheduler.run(
         [this, url, contentType] {
-            std::shared_ptr<abstract_http_client> httpClient = newClient();
-            if (httpClient.get() == nullptr)
-            {
-                return QJSValueList({url, "", "failed to initialize a client"});
-            }
             std::string response;
+            std::shared_ptr<http_simple_client> httpClient(new http_simple_client());
             QString error = get(httpClient, url, response, contentType);
             return QJSValueList({url, QString::fromStdString(response), error});
         },
@@ -121,24 +117,8 @@ void Network::getJSON(const QString &url, const QJSValue &callback) const
     get(url, callback, "application/json; charset=utf-8");
 }
 
-std::string Network::get(const QString &url, const QString &contentType /* = {} */) const
-{
-    std::string response;
-    std::shared_ptr<abstract_http_client> httpClient = newClient();
-    if (httpClient.get() == nullptr)
-    {
-        throw std::runtime_error("failed to initialize a client");
-    }
-    QString error = get(httpClient, url, response, contentType);
-    if (!error.isEmpty())
-    {
-        throw std::runtime_error(QString("failed to fetch %1: %2").arg(url).arg(error).toStdString());
-    }
-    return response;
-}
-
 QString Network::get(
-    std::shared_ptr<abstract_http_client> httpClient,
+    std::shared_ptr<http_simple_client> httpClient,
     const QString &url,
     std::string &response,
     const QString &contentType /* = {} */) const
@@ -171,14 +151,4 @@ QString Network::get(
 
     response = std::move(pri->m_body);
     return {};
-}
-
-std::shared_ptr<abstract_http_client> Network::newClient() const
-{
-    std::shared_ptr<abstract_http_client> client(new net::http::client());
-    if (!client->set_proxy(m_proxyAddress.toStdString()))
-    {
-        throw std::runtime_error("failed to set proxy address");
-    }
-    return client;
 }

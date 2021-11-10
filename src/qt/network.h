@@ -35,12 +35,12 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 #pragma GCC diagnostic ignored "-Wreorder"
-#include <net/http.h>
+#include <net/http_client.h>
 #pragma GCC diagnostic pop
 
 #include "FutureScheduler.h"
 
-class HttpClient : public QObject, public net::http::client
+class HttpClient : public QObject, public epee::net_utils::http::http_simple_client
 {
     Q_OBJECT
     Q_PROPERTY(quint64 contentLength READ contentLength NOTIFY contentLengthChanged);
@@ -70,8 +70,6 @@ private:
 class Network : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString proxyAddress MEMBER m_proxyAddress NOTIFY proxyAddressChanged)
-
 public:
     Network(QObject *parent = nullptr);
 
@@ -79,20 +77,12 @@ public:
     Q_INVOKABLE void get(const QString &url, const QJSValue &callback, const QString &contentType = {}) const;
     Q_INVOKABLE void getJSON(const QString &url, const QJSValue &callback) const;
 
-    std::string get(const QString &url, const QString &contentType = {}) const;
     QString get(
-        std::shared_ptr<epee::net_utils::http::abstract_http_client> httpClient,
+        std::shared_ptr<epee::net_utils::http::http_simple_client> httpClient,
         const QString &url,
         std::string &response,
         const QString &contentType = {}) const;
 
-signals:
-    void proxyAddressChanged() const;
-
 private:
-    std::shared_ptr<epee::net_utils::http::abstract_http_client> newClient() const;
-
-private:
-    QString m_proxyAddress;
     mutable FutureScheduler m_scheduler;
 };
