@@ -1604,14 +1604,6 @@ ApplicationWindow {
         }
     }
 
-    MoneroComponents.UpdateDialog {
-        id: updateDialog
-
-        allowed: !passwordDialog.visible && !inputDialog.visible && !splash.visible
-        x: (parent.width - width) / 2
-        y: (parent.height - height) / 2
-    }
-
     MoneroComponents.RemoteNodeDialog {
         id: remoteNodeDialog
     }
@@ -1843,7 +1835,7 @@ ApplicationWindow {
             anchors.fill: blurredArea
             source: blurredArea
             radius: 64
-            visible: passwordDialog.visible || inputDialog.visible || splash.visible || updateDialog.visible ||
+            visible: passwordDialog.visible || inputDialog.visible || splash.visible ||
                 devicePassphraseDialog.visible || txConfirmationPopup.visible || successfulTxPopup.visible ||
                 remoteNodeDialog.visible
         }

@@ -13,7 +13,6 @@
         <file>components/SettingsListItem.qml</file>
         <file>components/Slider.qml</file>
         <file>components/Tooltip.qml</file>
-        <file>components/UpdateDialog.qml</file>
         <file>images/whatIsIcon.png</file>
         <file>images/whatIsIcon@2x.png</file>
         <file>components/MenuButton.qml</file>
