@@ -442,11 +442,15 @@ double WalletManager::getPasswordStrength(const QString &password) const
 bool WalletManager::saveQrCode(const QString &code, const QString &path) const
 {
     QSize size;
-    return false;
+    return QRCodeImageProvider::genQrImage(code, &size).scaled(size.expandedTo(QSize(240, 240)), Qt::KeepAspectRatio).save(path, "PNG", 100);
 }
 
 void WalletManager::saveQrCodeToClipboard(const QString &code) const
 {
+    QClipboard *clipboard = QGuiApplication::clipboard();
+    QSize size;
+    clipboard->setImage(QRCodeImageProvider::genQrImage(code, &size).scaled(size.expandedTo(QSize(240, 240)), Qt::KeepAspectRatio), QClipboard::Clipboard);
+    clipboard->setImage(QRCodeImageProvider::genQrImage(code, &size).scaled(size.expandedTo(QSize(240, 240)), Qt::KeepAspectRatio), QClipboard::Selection);
 }
 
 void WalletManager::checkUpdatesAsync(

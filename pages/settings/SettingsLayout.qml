@@ -154,5 +154,6 @@ Rectangle {
             }
             onMoved: persistentSettings.lockOnUserInActivityInterval = value
         }
+    }
 }
 

@@ -902,7 +902,7 @@ bool Wallet::parse_uri(const QString &uri, QString &address, QString &payment_id
 QString Wallet::make_uri(const QString &address, const quint64 &amount, const QString &tx_description, const QString &recipient_name) const
 {
     std::string error;
-    return QString::fromStdString("");
+    return QString::fromStdString(m_walletImpl->make_uri(address.toStdString(), "", amount, tx_description.toStdString(), recipient_name.toStdString(), error));
 }
 
 bool Wallet::rescanSpent()

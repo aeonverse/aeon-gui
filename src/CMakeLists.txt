@@ -123,6 +123,7 @@ target_link_libraries(aeon-wallet-gui
     epee
     common
     wallet_api
+    qrcodegen
     easylogging
     ${QT5_LIBRARIES}
     ${EXTRA_LIBRARIES}
