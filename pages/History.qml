@@ -619,7 +619,7 @@ Rectangle {
                         width: 10
                         height: 10
                         radius: 8
-                        color: isout ? "#d85a00" : "#2eb358"
+                        color: isout ? "#0072c6" : "#00729c"
                     }
 
                     MoneroComponents.TextPlain {
@@ -739,7 +739,7 @@ Rectangle {
                                     font.pixelSize: 15
                                     text: {
                                         if(!isout && confirmationsRequired === 60) return qsTr("Yes") + translationManager.emptyString;
-                                        if(fee !== "") return Utils.removeTrailingZeros(fee) + " XMR";
+                                        if(fee !== "") return Utils.removeTrailingZeros(fee) + " vNote";
                                         return "-";
                                     }
 
@@ -1573,7 +1573,7 @@ Rectangle {
                 // has the correct amount, so we try to fetch it from that instead.
                 amount = Number(TxUtils.destinationsToAmount(destinations));
             }
-            var displayAmount = Utils.removeTrailingZeros(amount.toFixed(12)) + " XMR";
+            var displayAmount = Utils.removeTrailingZeros(amount.toFixed(12)) + " vNote";
 
             var tx_note = currentWallet.getUserNote(hash);
             var address = "";

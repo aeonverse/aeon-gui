@@ -176,7 +176,7 @@ Rectangle {
                     fontSize: 12
                     id: accountIndex
                     text: qsTr("Account") + translationManager.emptyString + " #" + currentAccountIndex
-                    color: MoneroComponents.Style.blackTheme ? "white" : "black"
+                    color: "white"
                     anchors.left: parent.left
                     anchors.leftMargin: 60
                     anchors.top: parent.top
@@ -195,7 +195,7 @@ Rectangle {
                     fontSize: 16
                     id: accountLabel
                     textWidth: 170
-                    color: MoneroComponents.Style.blackTheme ? "white" : "black"
+                    color: "white"
                     anchors.left: parent.left
                     anchors.leftMargin: 60
                     anchors.top: parent.top
@@ -215,7 +215,7 @@ Rectangle {
                     fontSize: 16
                     visible: isSyncing
                     text: qsTr("Syncing...") + translationManager.emptyString
-                    color: MoneroComponents.Style.blackTheme ? "white" : "black"
+                    color: "white"
                     anchors.left: parent.left
                     anchors.leftMargin: 20
                     anchors.bottom: currencyLabel.top
@@ -230,14 +230,14 @@ Rectangle {
                         if (persistentSettings.fiatPriceEnabled && persistentSettings.fiatPriceToggle) {
                             return appWindow.fiatApiCurrencySymbol();
                         } else {
-                            return "XMR"
+                            return "vNote"
                         }
                     }
-                    color: MoneroComponents.Style.blackTheme ? "white" : "black"
+                    color: "white"
                     anchors.left: parent.left
                     anchors.leftMargin: 20
                     anchors.top: parent.top
-                    anchors.topMargin: 100
+                    anchors.topMargin: 90
                     themeTransition: false
 
                     MouseArea {
@@ -253,12 +253,12 @@ Rectangle {
                     id: balancePart1
                     themeTransition: false
                     anchors.left: parent.left
-                    anchors.leftMargin: 58
+                    anchors.leftMargin: 65
                     anchors.baseline: currencyLabel.baseline
-                    color: MoneroComponents.Style.blackTheme ? "white" : "black"
+                    color: "white"
                     Binding on color {
                         when: balancePart1MouseArea.containsMouse || balancePart2MouseArea.containsMouse
-                        value: MoneroComponents.Style.orange
+                        value: MoneroComponents.Style.white
                     }
                     text: {
                         if (persistentSettings.fiatPriceEnabled && persistentSettings.fiatPriceToggle) {

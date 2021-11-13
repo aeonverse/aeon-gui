@@ -652,6 +652,7 @@ void Wallet::estimateTransactionFeeAsync(
                 destinations.emplace_back(std::make_pair(destinationAddresses[index].toStdString(), amounts[index]));
             }
             const uint64_t fee = 1000000000;
+            return QJSValueList({QString::fromStdString(Monero::Wallet::displayAmount(fee))});
         },
         callback);
 }

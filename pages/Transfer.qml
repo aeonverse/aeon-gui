@@ -166,7 +166,7 @@ Rectangle {
           visible: leftPanel.minutesToUnlock !== ""
 
           MoneroComponents.WarningBox {
-              text: qsTr("Spendable funds: %1 XMR. Please wait ~%2 minutes for your whole balance to become spendable.").arg(leftPanel.balanceUnlockedString).arg(leftPanel.minutesToUnlock)
+              text: qsTr("Spendable funds: %1 vNote. Please wait ~%2 minutes for your whole balance to become spendable.").arg(leftPanel.balanceUnlockedString).arg(leftPanel.minutesToUnlock)
           }
       }
 
@@ -394,7 +394,7 @@ Rectangle {
                                 wrapMode: Text.WrapAnywhere
                                 placeholderText: {
                                     if(persistentSettings.nettype == NetworkType.MAINNET){
-                                        return "4.. / 8.. / monero:.. / OpenAlias";
+                                        return "W.. / X.. / aeon:.. / OpenAlias";
                                     } else if (persistentSettings.nettype == NetworkType.STAGENET){
                                         return "5.. / 7.. / monero:..";
                                     } else if(persistentSettings.nettype == NetworkType.TESTNET){
@@ -536,7 +536,7 @@ Rectangle {
                                 Layout.preferredWidth: recipientLayout.thirdRowWidth
                                 horizontalAlignment: Text.AlignHCenter
                                 font.family: MoneroComponents.Style.fontRegular.name
-                                text: "XMR"
+                                text: "vNote"
                                 visible: recipientModel.count == 1
                             }
                         }
@@ -617,7 +617,7 @@ Rectangle {
                         Layout.maximumWidth: recipientLayout.thirdRowWidth
                         horizontalAlignment: Text.AlignHCenter
                         font.family: MoneroComponents.Style.fontRegular.name
-                        text: "XMR"
+                        text: "vNote"
                         visible: recipientModel.count > 1
                     }
 
@@ -751,7 +751,7 @@ Rectangle {
                         if (!sendButton.enabled || estimatedFee == null) {
                             return ""
                         }
-                        return "~%1 XMR%2 %3".arg(estimatedFee)
+                        return "~%1 vNote%2 %3".arg(estimatedFee)
                             .arg(estimatedFeeFiat)
                             .arg(qsTr("fee") + translationManager.emptyString);
                     }
@@ -983,7 +983,7 @@ Rectangle {
                 if (appWindow.viewOnly && !pageRoot.checkInformation()) {
                     errorMessage = "<p class='orange'>" + qsTr("* To create a transaction file, please enter address and amount above") + "</p>";
                 }
-                var header = qsTr("Spend XMR from a cold (offline) wallet") + translationManager.emptyString;
+                var header = qsTr("Spend vNote from a cold (offline) wallet") + translationManager.emptyString;
                 return "<style type='text/css'>.header{ font-size: 13px; } p{line-height:20px; margin-top:0px; margin-bottom:0px; " +
                        ";} p.orange{color:#ff9323;}</style>" +
                        "<div class='header'>" + header + "</div>" +
@@ -1086,7 +1086,7 @@ Rectangle {
                 informationPopup.open();
             } else {
                 informationPopup.title = qsTr("Information") + translationManager.emptyString
-                informationPopup.text  = qsTr("Monero sent successfully") + translationManager.emptyString
+                informationPopup.text  = qsTr("vNote sent successfully") + translationManager.emptyString
                 informationPopup.icon  = StandardIcon.Information
                 informationPopup.onCloseCallback = null
                 informationPopup.open();

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg132"
+   width="520.28638"
+   height="270.56839"
+   viewBox="0 0 520.28638 270.56839"
+   sodipodi:docname="card-background-black.png.2021_11_11_14_57_53.0.svg"
+   inkscape:version="1.1.1 (eb90963e84, 2021-10-02)"
+   inkscape:export-filename="/home/user/aeonverse/aeon-gui/images/card-background-white.png"
+   inkscape:export-xdpi="47.973579"
+   inkscape:export-ydpi="47.973579"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs136" />
+  <sodipodi:namedview
+     id="namedview134"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="1.4136906"
+     inkscape:cx="247.57893"
+     inkscape:cy="68.261047"
+     inkscape:window-width="1852"
+     inkscape:window-height="1009"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g138" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g138">
+    <rect
+       style="fill:#008080;fill-opacity:1;stroke-width:0.935342"
+       id="rect873"
+       width="520.28638"
+       height="270.56839"
+       x="0"
+       y="0" />
+    <rect
+       style="fill:#000080;fill-opacity:0.33;stroke-width:1.17648"
+       id="rect1692-3-6"
+       width="480"
+       height="250"
+       x="0"
+       y="20.568394" />
+    <rect
+       style="fill:#0000ff;fill-opacity:0.33;stroke-width:1.16467"
+       id="rect1692"
+       width="490"
+       height="240"
+       x="30.286407"
+       y="0" />
+    <rect
+       style="fill:#00ffff;fill-opacity:0.33;stroke-width:1.15272"
+       id="rect1692-3"
+       width="480"
+       height="240"
+       x="0"
+       y="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:86.7695px;line-height:1.25;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.903849"
+       x="38.462875"
+       y="95.347672"
+       id="text7291"><tspan
+         sodipodi:role="line"
+         id="tspan7289"
+         x="38.462875"
+         y="95.347672"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:86.7695px;font-family:Lora;-inkscape-font-specification:Lora;fill:#ffffff;fill-opacity:1;stroke-width:0.903849">æ</tspan></text>
+  </g>
+</svg>

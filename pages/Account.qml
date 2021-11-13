@@ -270,7 +270,7 @@ Rectangle {
                                 anchors.leftMargin: -balanceNumberLabel.width
                                 fontSize: 16
                                 fontFamily: MoneroComponents.Style.fontMonoRegular.name;
-                                text: balance + " XMR"
+                                text: balance + " vNote"
                                 elide: Text.ElideRight
                                 textWidth: 180
                                 themeTransition: false
@@ -383,8 +383,8 @@ Rectangle {
             subaddressAccountListView.model = appWindow.currentWallet.subaddressAccountModel;
             appWindow.currentWallet.subaddress.refresh(appWindow.currentWallet.currentSubaddressAccount)
 
-            balanceAll.text = walletManager.displayAmount(appWindow.currentWallet.balanceAll()) + " XMR"
-            unlockedBalanceAll.text = walletManager.displayAmount(appWindow.currentWallet.unlockedBalanceAll()) + " XMR"
+            balanceAll.text = walletManager.displayAmount(appWindow.currentWallet.balanceAll()) + " vNote"
+            unlockedBalanceAll.text = walletManager.displayAmount(appWindow.currentWallet.unlockedBalanceAll()) + " vNote"
         }
     }
 

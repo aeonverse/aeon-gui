@@ -1,2 +1,79 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg version="1.1" viewBox="0 0 6000 6000" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><metadata><rdf:RDF><cc:Work rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/></cc:Work></rdf:RDF></metadata><defs><clipPath id="a"><path d="m0 4500h4500v-4500h-4500z"/></clipPath></defs><g transform="matrix(1.3333 0 0 -1.3333 0 6e3)"><g clip-path="url(#a)"><g transform="translate(4128 2250.2)"><path d="m0 0c0-1037.2-840.79-1878.1-1878.1-1878.1-1037.2 0-1878 840.88-1878 1878.1 0 1037.3 840.8 1878.1 1878 1878.1 1037.3 0 1878.1-840.79 1878.1-1878.1" fill="#fff"/></g><g transform="translate(2250 4128.2)"><path d="m0 0c-1036.9 0-1879.1-842.06-1877.8-1878 0.262-207.26 33.308-406.63 95.342-593.12h561.88v1579.9l1220.6-1220.6 1220.6 1220.6v-1579.9h561.96c62.117 186.48 95.008 385.85 95.369 593.12 1.809 1037-840.89 1877.8-1877.9 1877.8z" fill="#f36e36"/></g><g transform="translate(1969.3 1735.8)"><path d="m0 0-532.67 532.7v-994.14h-407.26l-384.29-0.07c329.63-540.8 925.35-902.56 1604.9-902.56 679.54 0 1275.3 361.85 1605 902.65l-384.44-0.013h-407.27v994.14l-813.3-813.31-280.62 280.61z" fill="#575757"/></g></g></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg955"
+   width="398.34024"
+   height="398.34024"
+   viewBox="0 0 398.34024 398.34024"
+   sodipodi:docname="aeon.svg"
+   inkscape:version="1.1.1 (eb90963e84, 2021-10-02)"
+   inkscape:export-filename="/home/user/Downloads/monero-gui-aeon-gui/images/moneroIcon-28x28@2x.png"
+   inkscape:export-xdpi="13.496"
+   inkscape:export-ydpi="13.496"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs959" />
+  <sodipodi:namedview
+     id="namedview957"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="97.580733"
+     inkscape:cy="205.41451"
+     inkscape:window-width="1852"
+     inkscape:window-height="1009"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g961" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g961">
+    <circle
+       style="fill:#008080;fill-opacity:1"
+       id="path1166"
+       cx="199.17012"
+       cy="199.17012"
+       r="199.17012" />
+    <circle
+       style="fill:#0000ff;fill-opacity:0.33;stroke-width:1.09196"
+       id="path1044-8"
+       cx="178.59836"
+       cy="211.34435"
+       r="175.22984" />
+    <circle
+       style="fill:#000080;fill-opacity:0.33;stroke-width:1.09196"
+       id="path1044-4"
+       cx="219.97148"
+       cy="211.01494"
+       r="175.22984" />
+    <circle
+       style="fill:#00ffff;fill-opacity:0.33;stroke-width:1.09196"
+       id="path1044"
+       cx="199.17012"
+       cy="175.22984"
+       r="175.22984" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:333.333px;line-height:1.25;font-family:sans-serif;fill:#ffffff;fill-opacity:1;stroke:none"
+       x="68.234917"
+       y="291.67319"
+       id="text7291"><tspan
+         sodipodi:role="line"
+         id="tspan7289"
+         x="68.234917"
+         y="291.67319"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:333.333px;font-family:Lora;-inkscape-font-specification:Lora;fill:#ffffff;fill-opacity:1">æ</tspan></text>
+  </g>
+</svg>
