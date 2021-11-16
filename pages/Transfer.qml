@@ -80,7 +80,6 @@ Rectangle {
         return "";
     }
     property string startLinkText: "<style type='text/css'>a {text-decoration: none; color: #FF6C3C; font-size: 14px;}</style><a href='#'>(%1)</a>".arg(qsTr("Start daemon")) + translationManager.emptyString
-    property bool warningLongPidDescription: descriptionLine.text.match(/^[0-9a-f]{64}$/i)
 
     Clipboard { id: clipboard }
 
@@ -109,11 +108,6 @@ Rectangle {
         console.log("updateFromQrCode")
         fillPaymentDetails(address, payment_id, amount, tx_description, recipient_name);
         cameraUi.qrcode_decoded.disconnect(updateFromQrCode)
-    }
-
-    function setDescription(value) {
-        descriptionLine.text = value;
-        descriptionCheckbox.checked = descriptionLine.text != "";
     }
 
     function setPaymentId(value) {
@@ -173,7 +167,7 @@ Rectangle {
         ListModel {
             id: recipientModel
 
-            readonly property int maxRecipients: 16
+            readonly property int maxRecipients: 1
 
             ListElement {
                 address: ""
@@ -422,9 +416,6 @@ Rectangle {
                                                 var address_ok = walletManager.addressValid(parts[1], appWindow.persistentSettings.nettype)
                                                 if (parts[0] === "true") {
                                                     if (address_ok) {
-                                                        // prepend openalias to description
-                                                        descriptionLine.text = descriptionLine.text ? address + " " + descriptionLine.text : address
-                                                        descriptionCheckbox.checked = true
                                                         recipientRepeater.itemAt(index).children[1].children[0].text = parts[1];
                                                     }
                                                     else
@@ -556,30 +547,6 @@ Rectangle {
                         Layout.row: 0
                         Layout.fillWidth: true
                         Layout.topMargin: recipientModel.count > 1 ? 0 : -1
-                        spacing: 0
-
-                        CheckBox {
-                            border: false
-                            checked: false
-                            enabled: {
-                                if (recipientModel.count > 0 && recipientModel.get(0).amount == "(all)") {
-                                    return false;
-                                }
-                                if (recipientModel.count >= recipientModel.maxRecipients) {
-                                    return false;
-                                }
-                                return true;
-                            }
-                            fontAwesomeIcons: true
-                            fontSize: descriptionLine.labelFontSize
-                            iconOnTheLeft: true
-                            text: qsTr("Add recipient") + translationManager.emptyString
-                            toggleOnClick: false
-                            uncheckedIcon: FontAwesome.plusCircle
-                            onClicked: {
-                                recipientModel.newRecipient("", "");
-                            }
-                        }
 
                         MoneroComponents.TextPlain {
                             Layout.fillWidth: true
@@ -766,45 +733,11 @@ Rectangle {
             }
         }
 
-      MoneroComponents.WarningBox {
-          text: qsTr("Description field contents match long payment ID format. \
-          Please don't paste long payment ID into description field, your funds might be lost.") + translationManager.emptyString;
-          visible: warningLongPidDescription
-      }
-
       ColumnLayout {
           spacing: 15
 
           ColumnLayout {
-              CheckBox {
-                  id: descriptionCheckbox
-                  border: false
-                  checkedIcon: FontAwesome.minusCircle
-                  uncheckedIcon: FontAwesome.plusCircle
-                  fontAwesomeIcons: true
-                  fontSize: descriptionLine.labelFontSize
-                  iconOnTheLeft: true
-                  Layout.fillWidth: true
-                  text: qsTr("Add description") + translationManager.emptyString
-                  onClicked: {
-                      if (!descriptionCheckbox.checked) {
-                        descriptionLine.text = "";
-                      }
-                  }
-              }
-
-              LineEdit {
-                  id: descriptionLine
-                  placeholderFontSize: 16
-                  fontSize: 16
-                  placeholderText: qsTr("Saved to local wallet history") + " (" + qsTr("only visible to you") + ")" + translationManager.emptyString
-                  Layout.fillWidth: true
-                  visible: descriptionCheckbox.checked
-              }
-          }
-
-          ColumnLayout {
-              visible: paymentIdCheckbox.checked
+          
               CheckBox {
                   id: paymentIdCheckbox
                   border: false
@@ -827,7 +760,6 @@ Rectangle {
                   id: paymentIdLine
                   fontBold: true
                   placeholderText: qsTr("64 hexadecimal characters") + translationManager.emptyString
-                  readOnly: true
                   Layout.fillWidth: true
                   wrapMode: Text.WrapAnywhere
                   addressValidation: false
@@ -835,14 +767,6 @@ Rectangle {
                   error: paymentIdCheckbox.checked
               }
           }
-      }
-
-      MoneroComponents.WarningBox {
-          id: paymentIdWarningBox
-          text: qsTr("Long payment IDs are obsolete. \
-          Long payment IDs were not encrypted on the blockchain and would harm your privacy. \
-          If the party you're sending to still requires a long payment ID, please notify them.") + translationManager.emptyString;
-          visible: paymentIdCheckbox.checked || warningLongPidDescription
       }
 
       MoneroComponents.WarningBox {
@@ -858,13 +782,13 @@ Rectangle {
               rightIconInactive: "qrc:///images/rightArrowInactive.png"
               Layout.topMargin: 4
               text: qsTr("Send") + translationManager.emptyString
-              enabled: !sendButtonWarningBox.visible && !warningContent && !recipientModel.hasEmptyAddress() && !paymentIdWarningBox.visible
+              enabled: !sendButtonWarningBox.visible && !warningContent && !recipientModel.hasEmptyAddress()
               onClicked: {
                   console.log("Transfer: paymentClicked")
                   var priority = priorityModelV5.get(priorityDropdown.currentIndex).priority
                   console.log("priority: " + priority)
                   setPaymentId(paymentIdLine.text.trim());
-                  root.paymentClicked(recipientModel.getRecipients(), paymentIdLine.text, root.mixin, priority, descriptionLine.text)
+                  root.paymentClicked(recipientModel.getRecipients(), paymentIdLine.text, root.mixin, priority,"")
               }
           }
       }
@@ -964,7 +888,7 @@ Rectangle {
                 var priority = priorityModelV5.get(priorityDropdown.currentIndex).priority
                 console.log("priority: " + priority)
                 setPaymentId(paymentIdLine.text.trim());
-                root.paymentClicked(recipientModel.getRecipients(), paymentIdLine.text, root.mixin, priority, descriptionLine.text)
+                root.paymentClicked(recipientModel.getRecipients(), paymentIdLine.text, root.mixin, priority, "")
             }
             button2.text: qsTr("Sign (offline)") + translationManager.emptyString
             button2.enabled: !appWindow.viewOnly
