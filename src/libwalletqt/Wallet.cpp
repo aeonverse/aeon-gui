@@ -470,20 +470,20 @@ quint64 Wallet::daemonBlockChainTargetHeight() const
 
 bool Wallet::exportKeyImages(const QString& path, bool all)
 {
-    return false;
+    return m_walletImpl->exportKeyImages(path.toStdString());
 }
 
 bool Wallet::importKeyImages(const QString& path)
 {
-    return false;
+    return m_walletImpl->importKeyImages(path.toStdString());
 }
 
 bool Wallet::exportOutputs(const QString& path, bool all) {
-    return false;
+    return m_walletImpl->exportOutputs(path.toStdString());
 }
 
 bool Wallet::importOutputs(const QString& path) {
-    return false;
+    return m_walletImpl->importOutputs(path.toStdString());
 }
 
 bool Wallet::refresh(bool historyAndSubaddresses /* = true */)
